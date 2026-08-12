@@ -1,19 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TailWindCss projects</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BankDash UI - Tailwind CSS</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- FontAwesome CDN for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#23235f',
+              blue: '#1814f3',
+              gray: '#718ebf',
+              darkText: '#343c6a',
+              bg: '#f5f7fa',
+              border: '#e6eff5'
+            }
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body>
-    <div class="w-1440px h-1175px bg-white border-r border-brand-border flex flex-col flex-shrink-0 hidden md:flex">
-        <div class="w-250px h-1184px px-8 py-6 text-xl font-extrabold text-brand-navy flex items-center gap-3">
-            <div class="w-36px h-6px top-31px left-38px bg-brand-blue rounded-full bg-blue-500"></div> 
-      <i class="fa-solid fa-credit-card text-brand-blue"></i> BankDash.        
-    </div><ul class="mt-2 space-y-1">
+<body class="bg-brand-bg text-brand-darkText flex min-h-screen font-sans">
+
+  <!-- Sidebar -->
+  <div class="w- bg-white border-r border-brand-border flex flex-col flex-shrink-0 hidden md:flex">
+    <div class="px-8 py-6 text-xl font-extrabold text-brand-navy flex items-center gap-3">
+      <i class="fa-solid fa-credit-card text-brand-blue"></i> BankDash.
+    </div>
+    <ul class="mt-2 space-y-1">
       <li class="nav-item active flex items-center gap-4 px-8 py-3.5 text-brand-blue font-semibold border-l-4 border-brand-blue cursor-pointer">
-        <i class="fa-solid fa-house w-189px h-60px"></i> Dashboard
+        <i class="fa-solid fa-house w-5"></i> Dashboard
       </li>
       <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer">
         <i class="fa-solid fa-money-bill-transfer w-5"></i> Transactions
@@ -25,25 +51,20 @@
         <i class="fa-solid fa-chart-line w-5"></i> Investments
       </li>
       <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer">
-        <i class="fa-solid fa-credit-card w-5"></i> Credit Cards
-      </li>
+        <i class="fa-solid fa-credit-card w-5"></i> Credit Cards</li>
       <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer">
-        <i class="fa-solid fa-hand-holding-dollar w-5"></i> Loans
-      </li>
+        <i class="fa-solid fa-hand-holding-dollar w-5"></i> Loans</li>
       <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer">
-        <i class="fa-solid fa-wrench w-5"></i> Services
-      </li>
+        <i class="fa-solid fa-wrench w-5"></i> Services</li>
       <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer">
-        <i class="fa-solid fa-lightbulb w-5"></i> My Privileges
-      </li>
+        <i class="fa-solid fa-lightbulb w-5"></i> My Privileges</li>
       <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer">
-        <i class="fa-solid fa-gear w-5"></i> Setting
-      </li>
+        <i class="fa-solid fa-gear w-5"></i> Setting</li>
     </ul>
+  </div>
 
-     </div>
-     <!-- main content -->
-      <main class="flex-1 flex flex-col min-w-0 overflow-x-hidden">
+  <!-- Main Content Area -->
+  <main class="flex-1 flex flex-col min-w-0 overflow-x-hidden">
     <!-- Header -->
     <header class="bg-white border-b border-brand-border px-6 md:px-10 py-5 flex items-center justify-between">
       <h1 id="page-title" class="text-2xl font-bold text-brand-navy">Overview</h1>
@@ -52,23 +73,202 @@
           <i class="fa-solid fa-magnifying-glass"></i>
           <input type="text" placeholder="Search for something" class="bg-transparent outline-none text-sm text-brand-darkText">
         </div>
-        <button onclick="alert('Settings Clicked')" class="w-50 h-50 rounded-full bg-brand-bg flex items-center justify-center text-brand-gray hover:bg-gray-200 transition">
+        <button onclick="alert('Settings Clicked')" class="w-10 h-10 rounded-full bg-brand-bg flex items-center justify-center text-brand-gray hover:bg-gray-200 transition">
           <i class="fa-solid fa-gear"></i>
         </button>
-        <button onclick="alert('Notifications Clicked')" class="w-50 h-50 rounded-full bg-brand-bg flex items-center justify-center text-rose-500 hover:bg-gray-200 transition">
+        <button onclick="alert('Notifications Clicked')" class="w-10 h-10 rounded-full bg-brand-bg flex items-center justify-center text-rose-500 hover:bg-gray-200 transition">
           <i class="fa-solid fa-bell"></i>
         </button>
         <img src="images/Mask Group1.png" alt="Profile" onclick="alert('Profile Clicked')" class="w-138.46 h-92.31 rounded-full object-cover cursor-pointer">
       </div>
     </header>
 
+    <!-- Content Grid -->
+    <div class="p-6 md:p-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
+      
+      <!-- Left 2 Columns -->
+      <div class="lg:col-span-2 space-y-8">
+        
+        <!-- My Cards -->
+        <div>
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-bold text-brand-navy">My Cards</h2>
+            <button onclick="alert('See All Cards Clicked')" class="text-sm font-semibold text-brand-navy hover:underline">See All</button>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <!-- Blue Card -->
+            <div onclick="alert('Primary Card Selected')" class="bg-gradient-to-r from-blue-900 to-blue-600 rounded-2xl p-5 text-white flex flex-col justify-between h-48 cursor-pointer transform hover:-translate-y-1 transition">
+              <div>
+                <div class="flex justify-between items-start">
+                  <div>
+                    <p class="text-xs opacity-80">Balance</p>
+                    <p class="text-xl font-bold">$5,756</p>
+                  </div>
+                  <i class="fa-solid fa-microchip text-2xl"></i>
+                </div>
+                <div class="flex gap-8 text-xs mt-4">
+                  <div>
+                    <p class="opacity-80">CARD HOLDER</p>
+                    <p class="font-medium">Eddy Cusuma</p>
+                  </div>
+                  <div>
+                    <p class="opacity-80">VALID THRU</p>
+                    <p class="font-medium">12/22</p>
+                  </div>
+                </div>
+              </div>
+              <div class="flex justify-between items-center border-t border-white/20 pt-3 text-base tracking-widest">
+                <span>3778 **** **** 1234</span>
+                <i class="fa-brands fa-cc-mastercard text-2xl"></i>
+              </div>
+            </div>
 
+            <!-- White Card -->
+            <div onclick="alert('Secondary Card Selected')" class="bg-white border border-brand-border rounded-2xl p-5 text-brand-darkText flex flex-col justify-between h-48 cursor-pointer transform hover:-translate-y-1 transition">
+              <div>
+                <div class="flex justify-between items-start">
+                  <div>
+                    <p class="text-xs text-brand-gray">Balance</p>
+                    <p class="text-xl font-bold">$5,756</p>
+                  </div>
+                  <i class="fa-solid fa-microchip text-2xl text-brand-navy"></i>
+                </div>
+                <div class="flex gap-8 text-xs mt-4">
+                  <div>
+                    <p class="text-brand-gray">CARD HOLDER</p>
+                    <p class="font-medium">Eddy Cusuma</p>
+                  </div>
+                  <div>
+                    <p class="text-brand-gray">VALID THRU</p>
+                    <p class="font-medium">12/22</p>
+                  </div>
+                </div>
+              </div>
+              <div class="flex justify-between items-center border-t border-brand-border pt-3 text-base tracking-widest">
+                <span>3778 **** **** 1234</span>
+                <i class="fa-brands fa-cc-mastercard text-2xl"></i>
+              </div>
+            </div>
+          </div>
+        </div>
 
+        <!-- Weekly Activity Bar Chart -->
+        <div>
+          <h2 class="text-lg font-bold text-brand-navy mb-4">Weekly Activity</h2>
+          <div class="bg-white p-5 rounded-2xl border border-brand-border cursor-pointer transform hover:-translate-y-1 transition">
+            <canvas id="weeklyActivityChart" class="max-h-60"></canvas>
+          </div>
+        </div>
 
+        <!-- Quick Transfer & Balance History -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Quick Transfer -->
+          <div>
+            <h2 class="text-lg font-bold text-brand-navy mb-4">Quick Transfer</h2>
+            <div class="bg-white p-5 rounded-2xl border border-brand-border h-48 flex flex-col justify-between cursor-pointer hover:shadow-lg transition">
+              <div class="flex items-center gap-4 justify-around">
+                <div class="user-card text-center cursor-pointer opacity-100 font-bold" onclick="selectUser(this)">
+                  <img src="images/Mask Group.png" class="w-12 h-12 rounded-full mx-auto mb-1">
+                  <p class="text-xs">Livia Bator</p>
+                  <p class="text-[10px] text-brand-gray font-normal">CEO</p>
+                </div>
+                <div class="user-card text-center cursor-pointer opacity-50 hover:opacity-100 transition" onclick="selectUser(this)">
+                  <img src="images/Mask Group2.png" class="w-12 h-12 rounded-full mx-auto mb-1">
+                  <p class="text-xs">Randy Press</p>
+                  <p class="text-[10px] text-brand-gray font-normal">Director</p>
+                </div>
+                <div class="user-card text-center cursor-pointer opacity-50 hover:opacity-100 transition" onclick="selectUser(this)">
+                  <img src="images/Mask Group3.png" class="w-12 h-12 rounded-full mx-auto mb-1">
+                  <p class="text-xs">Workman</p>
+                  <p class="text-[10px] text-brand-gray font-normal">Designer</p>
+                </div>
+              </div>
+              <div class="flex items-center bg-brand-bg rounded-full pl-4 overflow-hidden border border-brand-border">
+                <span class="text-xs text-brand-gray whitespace-nowrap mr-2">Write Amount</span>
+                <input type="number" id="transferAmount" value="525.50" class="bg-transparent outline-none w-full text-sm font-semibold text-brand-darkText">
+                <button onclick="sendMoney()" class="bg-brand-blue text-white px-6 py-2.5 rounded-full font-semibold text-xs flex items-center gap-2 hover:bg-blue-800 transition">
+                  Send <i class="fa-solid fa-paper-plane"></i>
+                </button>
+              </div>
+            </div>
+          </div>
 
+          <!-- Balance History -->
+          <div>
+            <h2 class="text-lg font-bold text-brand-navy mb-4">Balance History</h2>
+            <div class="bg-white p-5 rounded-2xl border border-brand-border h-48 cursor-pointer transform hover:-translate-y-1 transition">
+              <canvas id="balanceHistoryChart" class="max-h-36"></canvas>
+            </div>
+          </div>
+        </div>
 
+      </div>
+
+      <!-- Right Column -->
+      <div class="space-y-8">
+        
+        <!-- Recent Transactions -->
+        <div>
+          <h2 class="text-lg font-bold text-brand-navy mb-4">Recent Transaction</h2>
+          <div class="bg-white p-5 rounded-2xl border border-brand-border space-y-4 h-48 flex flex-col justify-center cursor-pointer transform hover:-translate-y-1 transition">
+            
+            <div onclick="alert('Transaction details: Deposit from my Card')" class="flex items-center justify-between cursor-pointer hover:bg-gray-50 p-1.5 rounded-xl transition">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-500 flex items-center justify-center">
+                  <i class="fa-solid fa-wallet"></i>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold">Deposit from my Card</p>
+                  <p class="text-xs text-brand-gray">28 January 2021</p>
+                </div>
+              </div>
+              <span class="text-sm font-bold text-rose-500">-$850</span>
+            </div>
+
+            <div onclick="alert('Transaction details: Deposit Paypal')" class="flex items-center justify-between cursor-pointer hover:bg-gray-50 p-1.5 rounded-xl transition">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+                  <i class="fa-brands fa-paypal"></i>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold">Deposit Paypal</p>
+                  <p class="text-xs text-brand-gray">25 January 2021</p>
+                </div>
+              </div>
+              <span class="text-sm font-bold text-emerald-400">+$2,500</span>
+            </div>
+
+            <div onclick="alert('Transaction details: Jemi Wilson')" class="flex items-center justify-between cursor-pointer hover:bg-gray-50 p-1.5 rounded-xl transition">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-teal-100 text-teal-400 flex items-center justify-center">
+                  <i class="fa-solid fa-dollar-sign"></i>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold">Jemi Wilson</p>
+                  <p class="text-xs text-brand-gray">21 January 2021</p>
+                </div>
+              </div>
+              <span class="text-sm font-bold text-emerald-400">+$5,400</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Expense Statistics Chart -->
+        <div>
+          <h2 class="text-lg font-bold text-brand-navy mb-4">Expense Statistics</h2>
+          <div class="bg-white p-5 rounded-2xl border border-brand-border flex items-center justify-center cursor-pointer transform hover:-translate-y-1 transition">
+            <canvas id="expenseChart" class="max-h-64"></canvas>
+          </div>
+        </div>
+
+      </div>
 
     </div>
+  </main>
 
+  <script>
+    
+  </script>
 </body>
 </html>
