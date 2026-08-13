@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Settings</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- FontAwesome CDN for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#23235f',
+              blue: '#1814f3',
+              gray: '#718ebf',
+              darkText: '#343c6a',
+              bg: '#f5f7fa',
+              border: '#e6eff5'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+  <style>
+    /* Custom toggle switch */
+    .toggle {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      background-color: #e5e7eb;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .toggle.active {
+      background-color: #14b8a6;
+    }
+    .toggle::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 9999px;
+      transition: transform 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .toggle.active::after {
+      transform: translateX(20px);
+    }
+  </style>
+</head>
+
+<body class="bg-brand-bg text-brand-darkText flex min-h-screen font-sans"> 
+  <!-- Sidebar -->
+  <div class="w- bg-white border-r border-brand-border flex flex-col flex-shrink-0 hidden md:flex">
+    <div class="px-8 py-6 text-xl font-extrabold text-brand-navy flex items-center gap-3">
+      <i class="fa-solid fa-credit-card text-brand-blue"></i> BankDash.
+    </div>
+    <ul class="mt-2 space-y-1">
+      <li class="nav-item active flex items-center gap-4 px-8 py-3.5 text-brand-gray hover:text-brand-blue font-semibold border-l-4 cursor-pointer">
+        <i class="fa-solid fa-house w-5"></i><a href="index.html" class="nav-link"> Dashboard</a>
+      </li>
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer">
+        <i class="fa-solid fa-money-bill-transfer w-5"></i><a href="Transactions.html" class="nav-link"> Transactions</a>
+      </li>
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer">
+        <i class="fa-solid fa-user w-5"></i><a href="Accounts.html" class="nav-link"> Accounts</a>
+      </li>
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer">
+        <i class="fa-solid fa-chart-line w-5"></i><a href="Investments.html" class="nav-link"> Investments</a>
+      </li>
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer">
+        <i class="fa-solid fa-credit-card w-5"></i> <a href="CreditCards.html" class="nav-link"> Credit Cards</a></li>
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer">
+        <i class="fa-solid fa-hand-holding-dollar w-5"></i> <a href="Loans.html" class="nav-link"> Loans</a></li>
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer">
+        <i class="fa-solid fa-wrench w-5"></i> <a href="Services.html" class="nav-link"> Services</a></li>
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer">
+        <i class="fa-solid fa-lightbulb w-5"></i> <a href="Privileges.html" class="nav-link"> My Privileges</a></li>
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer">
+        <i class="fa-solid fa-gear w-5"></i> <a href="Settings.html" class="nav-link"> Settings</a></li>
+        
+    </ul>
+  </div>
+
+  <!-- Main Content Area -->
+  <main class="flex-1 flex flex-col min-w-0 overflow-x-hidden">
+    <!-- Header -->
+    <header class="bg-white border-b border-brand-border px-6 md:px-10 py-5 flex items-center justify-between">
+      <h1 id="page-title" class="text-2xl font-bold text-brand-navy">Setting</h1>
+      <div class="flex items-center gap-4">
+
+        <div class="bg-brand-bg rounded-full px-4 py-2 flex items-center gap-3 text-brand-gray">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="Search for something" class="bg-transparent outline-none text-sm text-brand-darkText">
+        </div>
+
+        <button onclick="alert('Settings Clicked')" class="w-10 h-10 rounded-full bg-brand-bg flex items-center justify-center text-brand-gray hover:bg-gray-200 transition">
+          <i class="fa-solid fa-gear"></i>
+        </button>
+
+        <button onclick="alert('Notifications Clicked')" class="w-10 h-10 rounded-full bg-brand-bg flex items-center justify-center text-rose-500 hover:bg-gray-200 transition">
+          <i class="fa-solid fa-bell"></i>
+        </button>
+        <img src="images/Mask Group1.png" alt="Profile" onclick="alert('Profile Clicked')" class="w-138.46 h-92.31 rounded-full object-cover cursor-pointer">
+      </div>
+    </header>
+  <div class="w-full max-w-3xl bg-white rounded-3xl shadow-sm m-6 mb-1 border-gray-100 overflow-hidden">
+    
+    <!-- Tabs -->
+    <div class="flex border-b border-gray-100 px-6 pt-5 gap-8">
+      <button onclick="showTab('profile')" id="tab-profile" class="tab-btn pb-4 text-sm font-medium text-blue-600 border-b-2 border-blue-600">
+        Edit Profile
+      </button>
+      <button onclick="showTab('preferences')" id="tab-preferences" class="tab-btn pb-4 text-sm font-medium text-gray-400 hover:text-gray-600">
+        Preferences
+      </button>
+      <button onclick="showTab('security')" id="tab-security" class="tab-btn pb-4 text-sm font-medium text-gray-400 hover:text-gray-600">
+        Security
+      </button>
+    </div>
+
+    <!---- EDIT PROFILE  ---->
+    <div id="panel-profile" class="tab-panel p-6 md:p-8">
+      <div class="flex flex-col md:flex-row gap-8">
+        
+        <!-- Avatar -->
+        <div class="flex-shrink-0 flex justify-center md:justify-start">
+          <div class="relative">
+            <img src="images/sam.jpeg" alt="Profile" class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md">
+          </div>
+        </div>
+
+        <!-- Form Fields -->
+        <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1.5">Your Name</label>
+            <input type="text" value="Charlene Reed" class="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1.5">User Name</label>
+            <input type="text" value="Charlene Reed" class="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
+            <input type="email" value="charlenereed@gmail.com" class="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1.5">Password</label>
+            <input type="password" value="password123"  class="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1.5">Date of Birth</label>
+            <div class="relative">
+            <input type="text" value="25 January 1990" class="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none">
+              
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1.5">Present Address</label>
+            <input type="text" value="San Jose, California, USA" 
+                   class="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1.5">Permanent Address</label>
+            <input type="text" value="San Jose, California, USA" 
+                   class="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1.5">City</label>
+            <input type="text" value="San Jose" 
+                   class="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1.5">Postal Code</label>
+            <input type="text" value="45962" 
+                   class="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1.5">Country</label>
+            <input type="text" value="USA" 
+                   class="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          </div>
+        </div>
+      </div>
+
+      <!-- Save Button -->
+      <div class="mt-8 flex justify-end">
+        <button class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-8 py-2.5 rounded-lg transition text-sm">
+          Save
+        </button>
+      </div>
+    </div>
+
+    <!---- PREFERENCES ---->
+    <div id="panel-preferences" class="tab-panel hidden p-6 md:p-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1.5">Currency</label>
+          <input type="text" value="USD" 
+                 class="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1.5">Time Zone</label>
+          <input type="text" value="(GMT-12:00) International Date Line West" 
+                 class="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-medium text-gray-700 mb-4">Notification</h3>
+        
+        <div class="space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="toggle active" onclick="this.classList.toggle('active')"></div>
+            <span class="text-sm text-gray-700">I send or receive digita currency</span>
+          </div>
+          
+          <div class="flex items-center gap-3">
+            <div class="toggle" onclick="this.classList.toggle('active')"></div>
+            <span class="text-sm text-gray-700">I receive merchant order</span>
+          </div>
+          
+          <div class="flex items-center gap-3">
+            <div class="toggle active" onclick="this.classList.toggle('active')"></div>
+            <span class="text-sm text-gray-700">There are recommendation for my account</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-10 flex justify-end">
+        <button class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-8 py-2.5 rounded-lg transition text-sm">
+          Save
+        </button>
+      </div>
+    </div>
+
+    <!---- SECURITY----->
+    <div id="panel-security" class="tab-panel hidden p-6 md:p-8">
+      
+      <div class="mb-8">
+        <h3 class="text-sm font-medium text-gray-700 mb-4">Two-factor Authentication</h3>
+        <div class="flex items-center gap-3">
+          <div class="toggle active" onclick="this.classList.toggle('active')"></div>
+          <span class="text-sm text-gray-700">Enable or disable two factor authentication</span>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-medium text-gray-700 mb-4">Change Password</h3>
+        
+        <div class="space-y-5 max-w-md">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1.5">Current Password</label>
+            <input type="password" value="password123" 
+                   class="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1.5">New Password</label>
+            <input type="password" value="password123" 
+                   class="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-10 flex justify-end">
+        <button class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-8 py-2.5 rounded-lg transition text-sm">
+          Save
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function showTab(tabName) {
+      // Hide all panels
+      document.querySelectorAll('.tab-panel').forEach(panel => {
+        panel.classList.add('hidden');
+      });
+      
+      // Reset all tab styles
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('text-blue-600', 'border-b-2', 'border-blue-600');
+        btn.classList.add('text-gray-400');
+      });
+      
+      // Show selected panel
+      document.getElementById('panel-' + tabName).classList.remove('hidden');
+      
+      // Style active tab
+      const activeTab = document.getElementById('tab-' + tabName);
+      activeTab.classList.remove('text-gray-400');
+      activeTab.classList.add('text-blue-600', 'border-b-2', 'border-blue-600');
+    }
+  </script>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</body>
+</html>
