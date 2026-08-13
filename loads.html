@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loans - BankDash</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- FontAwesome CDN for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#23235f',
+              blue: '#1814f3',
+              gray: '#718ebf',
+              darkText: '#343c6a',
+              bg: '#f5f7fa',
+              border: '#e6eff5'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .sidebar-width {
+      width: 250px;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar-width {
+        width: 100%;
+      }
+    }
+
+    .loan-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .loan-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    @media (max-width: 640px) {
+      .table-responsive {
+        display: block;
+        width: 100%;
+      }
+
+      table {
+        font-size: 14px;
+      }
+
+      table th,
+      table td {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body class="bg-brand-bg text-brand-darkText flex min-h-screen font-sans flex-col md:flex-row">
+
+  <!-- Sidebar -->
+  <div class="w-full md:sidebar-width bg-white border-b md:border-r md:border-b-0 border-brand-border flex md:flex-col flex-shrink-0 flex-row md:hidden md:flex overflow-x-auto">
+    <div class="px-8 py-6 text-xl font-extrabold text-brand-navy flex items-center gap-3 flex-shrink-0">
+      <i class="fa-solid fa-credit-card text-brand-blue"></i>
+      <span class="hidden sm:inline">BankDash.</span>
+    </div>
+    <ul class="mt-0 md:mt-2 space-y-0 md:space-y-1 flex md:flex-col overflow-x-auto md:overflow-x-visible">
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer flex-shrink-0">
+        <i class="fa-solid fa-house w-5"></i>
+        <span class="hidden sm:inline">Dashboard</span>
+      </li>
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer flex-shrink-0">
+        <i class="fa-solid fa-money-bill-transfer w-5"></i>
+        <span class="hidden sm:inline">Transactions</span>
+      </li>
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer flex-shrink-0">
+        <i class="fa-solid fa-user w-5"></i>
+        <span class="hidden sm:inline">Accounts</span>
+      </li>
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer flex-shrink-0">
+        <i class="fa-solid fa-chart-line w-5"></i>
+        <span class="hidden sm:inline">Investments</span>
+      </li>
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer flex-shrink-0">
+        <i class="fa-solid fa-credit-card w-5"></i>
+        <span class="hidden sm:inline">Credit Cards</span>
+      </li>
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-blue font-semibold border-b-4 md:border-b-0 md:border-l-4 border-brand-blue cursor-pointer flex-shrink-0">
+        <i class="fa-solid fa-hand-holding-dollar w-5"></i>
+        <span class="hidden sm:inline">Loans</span>
+      </li>
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer flex-shrink-0">
+        <i class="fa-solid fa-wrench w-5"></i>
+        <span class="hidden sm:inline">Services</span>
+      </li>
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer flex-shrink-0">
+        <i class="fa-solid fa-lightbulb w-5"></i>
+        <span class="hidden sm:inline">My Privileges</span>
+      </li>
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer flex-shrink-0">
+        <i class="fa-solid fa-gear w-5"></i>
+        <span class="hidden sm:inline">Setting</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Main Content Area -->
+  <main class="flex-1 flex flex-col min-w-0 overflow-x-hidden">
+    <!-- Header -->
+    <header class="bg-white border-b border-brand-border px-6 md:px-10 py-5 flex items-center justify-between flex-wrap gap-4">
+      <h1 class="text-2xl md:text-3xl font-bold text-brand-navy">Loans</h1>
+      <div class="flex items-center gap-4 flex-wrap w-full md:w-auto">
+        <div class="bg-brand-bg rounded-full px-4 py-2 flex items-center gap-3 text-brand-gray flex-1 md:flex-none">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="Search for something" class="bg-transparent outline-none text-sm text-brand-darkText w-full md:w-auto">
+        </div>
+        <button class="w-10 h-10 rounded-full bg-brand-bg flex items-center justify-center text-brand-gray hover:bg-gray-200 transition flex-shrink-0">
+          <i class="fa-solid fa-gear"></i>
+        </button>
+        <button class="w-10 h-10 rounded-full bg-brand-bg flex items-center justify-center text-rose-500 hover:bg-gray-200 transition flex-shrink-0">
+          <i class="fa-solid fa-bell"></i>
+        </button>
+        <img src="images/Mask Group1.png" alt="Profile" class="w-10 h-10 rounded-full object-cover cursor-pointer flex-shrink-0">
+      </div>
+    </header>
+
+    <!-- Content -->
+    <div class="p-4 md:p-6 lg:p-10 space-y-6 md:space-y-8">
+      
+      <!-- Loan Type Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        
+        <!-- Personal Loans -->
+        <div class="loan-card bg-white rounded-3xl p-6 md:p-8 border border-brand-border hover:shadow-lg">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <p class="text-brand-gray text-sm md:text-base mb-2">Personal Loans</p>
+              <h3 class="text-2xl md:text-3xl font-bold text-brand-navy">$50,000</h3>
+            </div>
+            <div class="w-12 h-12 md:w-14 md:h-14 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <i class="fa-solid fa-user text-blue-500 text-lg md:text-xl"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Corporate Loans -->
+        <div class="loan-card bg-white rounded-3xl p-6 md:p-8 border border-brand-border hover:shadow-lg">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <p class="text-brand-gray text-sm md:text-base mb-2">Corporate Loans</p>
+              <h3 class="text-2xl md:text-3xl font-bold text-brand-navy">$100,000</h3>
+            </div>
+            <div class="w-12 h-12 md:w-14 md:h-14 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <i class="fa-solid fa-briefcase text-yellow-500 text-lg md:text-xl"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Business Loans -->
+        <div class="loan-card bg-white rounded-3xl p-6 md:p-8 border border-brand-border hover:shadow-lg">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <p class="text-brand-gray text-sm md:text-base mb-2">Business Loans</p>
+              <h3 class="text-2xl md:text-3xl font-bold text-brand-navy">$500,000</h3>
+            </div>
+            <div class="w-12 h-12 md:w-14 md:h-14 bg-pink-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <i class="fa-solid fa-chart-bar text-pink-500 text-lg md:text-xl"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Custom Loans -->
+        <div class="loan-card bg-white rounded-3xl p-6 md:p-8 border border-brand-border hover:shadow-lg">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <p class="text-brand-gray text-sm md:text-base mb-2">Custom Loans</p>
+              <h3 class="text-lg md:text-2xl font-bold text-brand-navy">Choose Money</h3>
+            </div>
+            <div class="w-12 h-12 md:w-14 md:h-14 bg-teal-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <i class="fa-solid fa-sliders text-teal-500 text-lg md:text-xl"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Active Loans Overview -->
+      <div class="bg-white rounded-3xl p-6 md:p-8 border border-brand-border">
+        <h2 class="text-lg md:text-xl font-bold text-brand-navy mb-6">Active Loans Overview</h2>
+        
+        <div class="table-responsive">
+          <table class="w-full">
+            <thead>
+              <tr class="border-b border-brand-border">
+                <th class="text-left py-4 px-2 md:px-4 text-sm md:text-base font-semibold text-brand-gray">SL No</th>
+                <th class="text-left py-4 px-2 md:px-4 text-sm md:text-base font-semibold text-brand-gray">Loan Money</th>
+                <th class="text-left py-4 px-2 md:px-4 text-sm md:text-base font-semibold text-brand-gray">Left to repay</th>
+                <th class="text-left py-4 px-2 md:px-4 text-sm md:text-base font-semibold text-brand-gray">Duration</th>
+                <th class="text-left py-4 px-2 md:px-4 text-sm md:text-base font-semibold text-brand-gray">Interest rate</th>
+                <th class="text-left py-4 px-2 md:px-4 text-sm md:text-base font-semibold text-brand-gray">Installment</th>
+                <th class="text-left py-4 px-2 md:px-4 text-sm md:text-base font-semibold text-brand-gray">Repay</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Row 1 -->
+              <tr class="border-b border-brand-border hover:bg-brand-bg transition">
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-darkText">01.</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-semibold text-brand-navy">$100,000</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-semibold text-brand-navy">$40,500</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-darkText">8 Months</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-darkText">12%</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-navy">$2,000 / month</td>
+                <td class="py-4 px-2 md:px-4">
+                  <button class="px-4 md:px-6 py-2 border border-brand-blue text-brand-blue font-semibold rounded-full hover:bg-brand-blue hover:text-white transition text-sm md:text-base">Repay</button>
+                </td>
+              </tr>
+
+              <!-- Row 2 -->
+              <tr class="border-b border-brand-border hover:bg-brand-bg transition">
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-darkText">02.</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-semibold text-brand-navy">$500,000</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-semibold text-brand-navy">$250,000</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-darkText">36 Months</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-darkText">10%</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-navy">$8,000 / month</td>
+                <td class="py-4 px-2 md:px-4">
+                  <button class="px-4 md:px-6 py-2 border border-brand-blue text-brand-blue font-semibold rounded-full hover:bg-brand-blue hover:text-white transition text-sm md:text-base">Repay</button>
+                </td>
+              </tr>
+
+              <!-- Row 3 -->
+              <tr class="border-b border-brand-border hover:bg-brand-bg transition">
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-darkText">03.</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-semibold text-brand-navy">$900,000</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-semibold text-brand-navy">$40,500</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-darkText">12 Months</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-darkText">12%</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-navy">$5,000 / month</td>
+                <td class="py-4 px-2 md:px-4">
+                  <button class="px-4 md:px-6 py-2 border border-brand-blue text-brand-blue font-semibold rounded-full hover:bg-brand-blue hover:text-white transition text-sm md:text-base">Repay</button>
+                </td>
+              </tr>
+
+              <!-- Row 4 -->
+              <tr class="border-b border-brand-border hover:bg-brand-bg transition">
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-darkText">04.</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-semibold text-brand-navy">$50,000</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-semibold text-brand-navy">$40,500</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-darkText">25 Months</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-darkText">5%</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-navy">$2,000 / month</td>
+                <td class="py-4 px-2 md:px-4">
+                  <button class="px-4 md:px-6 py-2 border border-brand-blue text-brand-blue font-semibold rounded-full hover:bg-brand-blue hover:text-white transition text-sm md:text-base">Repay</button>
+                </td>
+              </tr>
+
+              <!-- Row 5 -->
+              <tr class="border-b border-brand-border hover:bg-brand-bg transition">
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-darkText">05.</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-semibold text-brand-navy">$50,000</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-semibold text-brand-navy">$40,500</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-darkText">5 Months</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-darkText">16%</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-navy">$10,000 / month</td>
+                <td class="py-4 px-2 md:px-4">
+                  <button class="px-4 md:px-6 py-2 border border-brand-blue text-brand-blue font-semibold rounded-full hover:bg-brand-blue hover:text-white transition text-sm md:text-base">Repay</button>
+                </td>
+              </tr>
+
+              <!-- Row 6 -->
+              <tr class="border-b border-brand-border hover:bg-brand-bg transition">
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-darkText">06.</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-semibold text-brand-navy">$80,000</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-semibold text-brand-navy">$25,500</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-darkText">14 Months</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-darkText">8%</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-navy">$2,000 / month</td>
+                <td class="py-4 px-2 md:px-4">
+                  <button class="px-4 md:px-6 py-2 border border-brand-blue text-brand-blue font-semibold rounded-full hover:bg-brand-blue hover:text-white transition text-sm md:text-base">Repay</button>
+                </td>
+              </tr>
+
+              <!-- Row 7 -->
+              <tr class="border-b border-brand-border hover:bg-brand-bg transition">
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-darkText">07.</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-semibold text-brand-navy">$12,000</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-semibold text-brand-navy">$5,500</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-darkText">9 Months</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-darkText">13%</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-navy">$500 / month</td>
+                <td class="py-4 px-2 md:px-4">
+                  <button class="px-4 md:px-6 py-2 border border-brand-blue text-brand-blue font-semibold rounded-full hover:bg-brand-blue hover:text-white transition text-sm md:text-base">Repay</button>
+                </td>
+              </tr>
+
+              <!-- Row 8 -->
+              <tr class="hover:bg-brand-bg transition">
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-darkText">08.</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-semibold text-brand-navy">$160,000</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-semibold text-brand-navy">$100,800</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-darkText">3 Months</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-darkText">12%</td>
+                <td class="py-4 px-2 md:px-4 text-sm md:text-base font-medium text-brand-navy">$900 / month</td>
+                <td class="py-4 px-2 md:px-4">
+                  <button class="px-4 md:px-6 py-2 border border-brand-blue text-brand-blue font-semibold rounded-full hover:bg-brand-blue hover:text-white transition text-sm md:text-base">Repay</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Total Row -->
+        <div class="border-t-2 border-brand-border mt-4 pt-4 grid grid-cols-1 md:grid-cols-7 gap-4">
+          <div class="text-sm md:text-base font-semibold text-rose-500">Total</div>
+          <div class="text-sm md:text-base font-semibold text-rose-500">$1,25,0000</div>
+          <div class="text-sm md:text-base font-semibold text-rose-500">$750,000</div>
+          <div></div>
+          <div></div>
+          <div class="text-sm md:text-base font-semibold text-rose-500">$50,000 / month</div>
+          <div></div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    // Navigation items
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', function() {
+        document.querySelectorAll('.nav-item').forEach(i => {
+          i.classList.remove('active', 'text-brand-blue', 'font-semibold', 'border-l-4', 'md:border-l-4', 'border-brand-blue');
+          i.classList.add('text-brand-gray', 'font-medium');
+        });
+        this.classList.add('active', 'text-brand-blue', 'font-semibold', 'border-b-4', 'md:border-b-0', 'md:border-l-4', 'border-brand-blue');
+        this.classList.remove('text-brand-gray', 'font-medium');
+      });
+    });
+
+    // Make Repay buttons interactive
+    document.querySelectorAll('button:contains("Repay")').forEach(btn => {
+      btn.addEventListener('click', function() {
+        alert('Repay button clicked!');
+      });
+    });
+  </script>
+
+</body>
+</html>
