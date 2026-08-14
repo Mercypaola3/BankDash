@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>BankDash Services</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            brand: {
+                                bg: '#f5f7fa',
+                                card: '#f5f6f9',
+                                border: '#e7edf5',
+                                navy: '#23314d',
+                                text: '#4d5c7b',
+                                muted: '#8897b0',
+                                blue: '#1d4ed8',
+                                blueSoft: '#eef3ff',
+                                cyan: '#dffaf7',
+                                green: '#dffaf2',
+                                amber: '#fff4d9',
+                                pink: '#ffe3ec',
+                                purple: '#eee8ff',
+                                accent: '#eff3ff'
+                            }
+                        }
+                    }
+                }
+            };
+        </script>
+        <style>
+            body {
+                font-family: Inter, "Segoe UI", sans-serif;
+            }
+
+            .sidebar-item.active {
+                color: #1d4ed8;
+                background: rgba(29, 78, 216, 0.04);
+                border-left: 3px solid #1d4ed8;
+                padding-left: 1.75rem;
+            }
+
+            .service-card {
+                background: rgba(255, 255, 255, 0.58);
+                border: 1px solid #e7edf5;
+            }
+
+            .service-row {
+                background: rgba(255, 255, 255, 0.55);
+                border: 1px solid #e7edf5;
+            }
+
+            .service-row+.service-row {
+                margin-top: 1rem;
+            }
+
+            @media (max-width: 767px) {
+                .sidebar-item.active {
+                    border-left: 0;
+                    border-bottom: 3px solid #1d4ed8;
+                    padding-left: 1rem;
+                }
+            }
+        </style>
+    </head>
+
+    <body class="min-h-screen bg-brand-bg text-brand-navy">
+        <div class="flex min-h-screen flex-col md:flex-row">
+            <aside id="sidebar"
+                class="fixed inset-y-0 left-0 z-40 hidden w-[260px] bg-white border-r border-brand-border shadow-lg md:static md:block md:w-[250px] md:shadow-none">
+                <div class="flex items-center gap-3 px-6 py-5 md:px-8 md:py-6">
+                    <div
+                        class="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-blue/10 text-lg text-brand-blue">
+                        <i class="fa-solid fa-credit-card"></i>
+                    </div>
+                    <div class="text-2xl font-extrabold tracking-tight">BankDash.</div>
+                </div>
+
+                <nav class="flex flex-col gap-1 px-0 py-3 md:py-4">
+                    <div
+                        class="sidebar-item flex items-center gap-4 rounded-r-md px-6 py-3 text-sm font-medium text-brand-text md:px-8">
+                        <i class="fa-solid fa-house w-5 text-center"></i>
+                        <span>Dashboard</span>
+                    </div>
+                    <div
+                        class="sidebar-item flex items-center gap-4 rounded-r-md px-6 py-3 text-sm font-medium text-brand-text md:px-8">
+                        <i class="fa-solid fa-money-bill-transfer w-5 text-center"></i>
+                        <span>Transactions</span>
+                    </div>
+                    <div
+                        class="sidebar-item flex items-center gap-4 rounded-r-md px-6 py-3 text-sm font-medium text-brand-text md:px-8">
+                        <i class="fa-solid fa-user w-5 text-center"></i>
+                        <span>Accounts</span>
+                    </div>
+                    <div
+                        class="sidebar-item flex items-center gap-4 rounded-r-md px-6 py-3 text-sm font-medium text-brand-text md:px-8">
+                        <i class="fa-solid fa-chart-column w-5 text-center"></i>
+                        <span>Investments</span>
+                    </div>
+                    <div
+                        class="sidebar-item flex items-center gap-4 rounded-r-md px-6 py-3 text-sm font-medium text-brand-text md:px-8">
+                        <i class="fa-regular fa-credit-card w-5 text-center"></i>
+                        <span>Credit Cards</span>
+                    </div>
+                    <div
+                        class="sidebar-item flex items-center gap-4 rounded-r-md px-6 py-3 text-sm font-medium text-brand-text md:px-8">
+                        <i class="fa-solid fa-hand-holding-dollar w-5 text-center"></i>
+                        <span>Loans</span>
+                    </div>
+                    <div
+                        class="sidebar-item active flex items-center gap-4 rounded-r-md px-6 py-3 text-sm font-semibold md:px-8">
+                        <i class="fa-solid fa-screwdriver-wrench w-5 text-center"></i>
+                        <span>Services</span>
+                    </div>
+                    <div
+                        class="sidebar-item flex items-center gap-4 rounded-r-md px-6 py-3 text-sm font-medium text-brand-text md:px-8">
+                        <i class="fa-solid fa-lightbulb w-5 text-center"></i>
+                        <span>My Privileges</span>
+                    </div>
+                    <div
+                        class="sidebar-item flex items-center gap-4 rounded-r-md px-6 py-3 text-sm font-medium text-brand-text md:px-8">
+                        <i class="fa-solid fa-gear w-5 text-center"></i>
+                        <span>Setting</span>
+                    </div>
+                </nav>
+            </aside>
+
+            <main class="flex-1 bg-brand-bg">
+                <header
+                    class="flex items-center justify-between gap-4 border-b border-brand-border bg-white px-4 py-4 md:px-8 md:py-5">
+                    <div class="flex items-center gap-3">
+                        <button id="menuToggle"
+                            class="flex h-11 w-11 items-center justify-center rounded-full bg-brand-card text-brand-navy transition hover:bg-brand-bg md:hidden"
+                            aria-label="Toggle menu">
+                            <i class="fa-solid fa-bars text-lg"></i>
+                        </button>
+                        <h1 class="text-2xl font-bold text-brand-navy md:text-[2.1rem]">Services</h1>
+                    </div>
+
+                    <div class="flex items-center gap-3 md:gap-4">
+                        <div
+                            class="hidden items-center gap-3 rounded-full border border-brand-border bg-brand-card px-4 py-2.5 text-brand-muted md:flex md:w-[320px]">
+                            <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                            <input
+                                class="w-full bg-transparent text-sm text-brand-navy placeholder:text-brand-muted focus:outline-none"
+                                type="text" placeholder="Search for something" />
+                        </div>
+
+                        <button
+                            class="flex h-10 w-10 items-center justify-center rounded-full bg-brand-card text-brand-text transition hover:bg-brand-bg">
+                            <i class="fa-solid fa-gear"></i>
+                        </button>
+                        <button
+                            class="flex h-10 w-10 items-center justify-center rounded-full bg-brand-card text-brand-text transition hover:bg-brand-bg">
+                            <i class="fa-solid fa-bell"></i>
+                        </button>
+                        <div
+                            class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-brand-border bg-gradient-to-br from-pink-200 via-amber-100 to-violet-200">
+                            <img src="images/Mask Group1.png" alt="Profile" class="h-full w-full object-cover" />
+                        </div>
+                    </div>
+                </header>
+
+                <div class="p-4 md:p-8 lg:p-10">
+                    <section class="grid gap-4 md:grid-cols-3">
+                        <div
+                            class="service-card flex items-center gap-4 rounded-[20px] px-5 py-5 shadow-[0_2px_6px_rgba(15,23,42,0.03)] md:px-6">
+                            <div
+                                class="flex h-14 w-14 items-center justify-center rounded-full bg-brand-purple text-xl text-brand-blue">
+                                <i class="fa-solid fa-heart"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-[1.05rem] font-semibold text-brand-navy">Life Insurance</h2>
+                                <p class="text-sm text-brand-muted">Unlimited protection</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="service-card flex items-center gap-4 rounded-[20px] px-5 py-5 shadow-[0_2px_6px_rgba(15,23,42,0.03)] md:px-6">
+                            <div
+                                class="flex h-14 w-14 items-center justify-center rounded-full bg-brand-amber text-xl text-amber-600">
+                                <i class="fa-solid fa-bag-shopping"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-[1.05rem] font-semibold text-brand-navy">Shopping</h2>
+                                <p class="text-sm text-brand-muted">Buy. Think. Grow.</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="service-card flex items-center gap-4 rounded-[20px] px-5 py-5 shadow-[0_2px_6px_rgba(15,23,42,0.03)] md:px-6">
+                            <div
+                                class="flex h-14 w-14 items-center justify-center rounded-full bg-brand-cyan text-xl text-emerald-600">
+                                <i class="fa-solid fa-shield-heart"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-[1.05rem] font-semibold text-brand-navy">Safety</h2>
+                                <p class="text-sm text-brand-muted">We are your allies</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="mt-8 rounded-[22px] bg-white/80 p-2 md:p-3">
+                        <h3 class="px-2 pb-3 pt-2 text-[1.05rem] font-bold text-brand-navy md:px-4 md:text-[1.15rem]">
+                            Bank Services List</h3>
+
+                        <div class="space-y-4">
+                            <div
+                                class="service-row flex flex-col gap-4 rounded-[18px] px-4 py-4 md:flex-row md:items-center md:justify-between md:gap-0">
+                                <div class="flex items-center gap-4 md:w-[28%]">
+                                    <div
+                                        class="flex h-12 w-12 items-center justify-center rounded-full bg-[#ffd9d9] text-xl text-[#f16b6b]">
+                                        <i class="fa-solid fa-sack-dollar"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-brand-navy">Business loans</div>
+                                        <div class="text-sm text-brand-muted">It is a long established</div>
+                                    </div>
+                                </div>
+
+                                <div class="text-sm text-brand-muted md:w-[18%]">Lorem Ipsum</div>
+                                <div class="text-sm text-brand-muted md:w-[18%]">Lorem Ipsum</div>
+                                <div class="text-sm text-brand-muted md:w-[18%]">Lorem Ipsum</div>
+
+                                <button
+                                    class="ml-auto rounded-full border border-brand-blue/60 bg-white px-4 py-2 text-sm font-medium text-brand-blue transition hover:bg-brand-blue hover:text-white md:min-w-[140px]">
+                                    View Details
+                                </button>
+                            </div>
+
+                            <div
+                                class="service-row flex flex-col gap-4 rounded-[18px] px-4 py-4 md:flex-row md:items-center md:justify-between md:gap-0">
+                                <div class="flex items-center gap-4 md:w-[28%]">
+                                    <div
+                                        class="flex h-12 w-12 items-center justify-center rounded-full bg-[#fce5b2] text-xl text-[#d7a539]">
+                                        <i class="fa-solid fa-briefcase"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-brand-navy">Checking accounts</div>
+                                        <div class="text-sm text-brand-muted">It is a long established</div>
+                                    </div>
+                                </div>
+
+                                <div class="text-sm text-brand-muted md:w-[18%]">Lorem Ipsum</div>
+                                <div class="text-sm text-brand-muted md:w-[18%]">Lorem Ipsum</div>
+                                <div class="text-sm text-brand-muted md:w-[18%]">Lorem Ipsum</div>
+
+                                <button
+                                    class="ml-auto rounded-full border border-brand-blue/60 bg-white px-4 py-2 text-sm font-medium text-brand-blue transition hover:bg-brand-blue hover:text-white md:min-w-[140px]">
+                                    View Details
+                                </button>
+                            </div>
+
+                            <div
+                                class="service-row flex flex-col gap-4 rounded-[18px] px-4 py-4 md:flex-row md:items-center md:justify-between md:gap-0">
+                                <div class="flex items-center gap-4 md:w-[28%]">
+                                    <div
+                                        class="flex h-12 w-12 items-center justify-center rounded-full bg-[#ffdce8] text-xl text-[#e992b9]">
+                                        <i class="fa-solid fa-piggy-bank"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-brand-navy">Savings accounts</div>
+                                        <div class="text-sm text-brand-muted">It is a long established</div>
+                                    </div>
+                                </div>
+
+                                <div class="text-sm text-brand-muted md:w-[18%]">Lorem Ipsum</div>
+                                <div class="text-sm text-brand-muted md:w-[18%]">Lorem Ipsum</div>
+                                <div class="text-sm text-brand-muted md:w-[18%]">Lorem Ipsum</div>
+
+                                <button
+                                    class="ml-auto rounded-full border border-brand-blue/60 bg-white px-4 py-2 text-sm font-medium text-brand-blue transition hover:bg-brand-blue hover:text-white md:min-w-[140px]">
+                                    View Details
+                                </button>
+                            </div>
+
+                            <div
+                                class="service-row flex flex-col gap-4 rounded-[18px] px-4 py-4 md:flex-row md:items-center md:justify-between md:gap-0">
+                                <div class="flex items-center gap-4 md:w-[28%]">
+                                    <div
+                                        class="flex h-12 w-12 items-center justify-center rounded-full bg-[#dfeaff] text-xl text-[#6f8dff]">
+                                        <i class="fa-solid fa-credit-card"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-brand-navy">Debit and credit cards</div>
+                                        <div class="text-sm text-brand-muted">It is a long established</div>
+                                    </div>
+                                </div>
+
+                                <div class="text-sm text-brand-muted md:w-[18%]">Lorem Ipsum</div>
+                                <div class="text-sm text-brand-muted md:w-[18%]">Lorem Ipsum</div>
+                                <div class="text-sm text-brand-muted md:w-[18%]">Lorem Ipsum</div>
+
+                                <button
+                                    class="ml-auto rounded-full border border-brand-blue/60 bg-white px-4 py-2 text-sm font-medium text-brand-blue transition hover:bg-brand-blue hover:text-white md:min-w-[140px]">
+                                    View Details
+                                </button>
+                            </div>
+
+                            <div
+                                class="service-row flex flex-col gap-4 rounded-[18px] px-4 py-4 md:flex-row md:items-center md:justify-between md:gap-0">
+                                <div class="flex items-center gap-4 md:w-[28%]">
+                                    <div
+                                        class="flex h-12 w-12 items-center justify-center rounded-full bg-[#dffaf7] text-xl text-[#2fc3b3]">
+                                        <i class="fa-solid fa-shield-heart"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-brand-navy">Life Insurance</div>
+                                        <div class="text-sm text-brand-muted">It is a long established</div>
+                                    </div>
+                                </div>
+
+                                <div class="text-sm text-brand-muted md:w-[18%]">Lorem Ipsum</div>
+                                <div class="text-sm text-brand-muted md:w-[18%]">Lorem Ipsum</div>
+                                <div class="text-sm text-brand-muted md:w-[18%]">Lorem Ipsum</div>
+
+                                <button
+                                    class="ml-auto rounded-full border border-brand-blue/60 bg-white px-4 py-2 text-sm font-medium text-brand-blue transition hover:bg-brand-blue hover:text-white md:min-w-[140px]">
+                                    View Details
+                                </button>
+                            </div>
+
+                            <div
+                                class="service-row flex flex-col gap-4 rounded-[18px] px-4 py-4 md:flex-row md:items-center md:justify-between md:gap-0">
+                                <div class="flex items-center gap-4 md:w-[28%]">
+                                    <div
+                                        class="flex h-12 w-12 items-center justify-center rounded-full bg-[#ffd9d9] text-xl text-[#f16b6b]">
+                                        <i class="fa-solid fa-sack-dollar"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-brand-navy">Business loans</div>
+                                        <div class="text-sm text-brand-muted">It is a long established</div>
+                                    </div>
+                                </div>
+
+                                <div class="text-sm text-brand-muted md:w-[18%]">Lorem Ipsum</div>
+                                <div class="text-sm text-brand-muted md:w-[18%]">Lorem Ipsum</div>
+                                <div class="text-sm text-brand-muted md:w-[18%]">Lorem Ipsum</div>
+
+                                <button
+                                    class="ml-auto rounded-full border border-brand-blue/60 bg-white px-4 py-2 text-sm font-medium text-brand-blue transition hover:bg-brand-blue hover:text-white md:min-w-[140px]">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </main>
+        </div>
+
+        <script>
+            const menuToggle = document.getElementById('menuToggle');
+            const sidebar = document.getElementById('sidebar');
+
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('hidden');
+            });
+
+            document.addEventListener('click', (event) => {
+                if (window.innerWidth < 768 && !sidebar.contains(event.target) && !menuToggle.contains(event.target)) {
+                    sidebar.classList.add('hidden');
+                }
+            });
+        </script>
+    </body>
+
+</html>
