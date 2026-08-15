@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BankDash UI - Tailwind CSS</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- FontAwesome CDN for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#23235f',
+              blue: '#1814f3',
+              gray: '#718ebf',
+              darkText: '#343c6a',
+              bg: '#f5f7fa',
+              border: '#e6eff5'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-brand-bg text-brand-darkText flex min-h-screen font-sans"> 
+
+  <!-- Sidebar -->
+  <div class="fixed top-0 left-0 h-screen w-64 bg-white border-r border-brand-border flex flex-col flex-shrink-0 hidden md:flex z-20 overflow-y-auto">
+    <div class="px-8 py-6 text-xl font-extrabold text-brand-navy flex items-center gap-3">
+      <i class="fa-solid fa-credit-card text-brand-blue"></i> BankDash.
+    </div>
+    <ul class="mt-2 space-y-1">
+      <li class="nav-item active flex items-center gap-4 px-8 py-3.5 text-brand-blue font-semibold border-l-4 border-brand-blue cursor-pointer">
+        <i class="fa-solid fa-house w-5"></i><a href="Dashboard.html" class="nav-link"> Dashboard</a>
+      </li>
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer">
+        <i class="fa-solid fa-money-bill-transfer w-5"></i><a href="Transactions.html" class="nav-link"> Transactions</a>
+      </li>
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer">
+        <i class="fa-solid fa-user w-5"></i><a href="Accounts.html" class="nav-link"> Accounts</a>
+      </li>
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer">
+        <i class="fa-solid fa-chart-line w-5"></i><a href="Investments.html" class="nav-link"> Investments</a>
+      </li>
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer">
+        <i class="fa-solid fa-credit-card w-5"></i> <a href="credit_card.html" class="nav-link"> Credit Cards</a></li>
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer">
+        <i class="fa-solid fa-hand-holding-dollar w-5"></i> <a href="loads.html" class="nav-link"> Loans</a></li>
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer">
+        <i class="fa-solid fa-wrench w-5"></i> <a href="services.html" class="nav-link"> Services</a></li>
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer">
+        <i class="fa-solid fa-lightbulb w-5"></i> <a href="Privileges.html" class="nav-link"> My Privileges</a></li>
+      <li class="nav-item flex items-center gap-4 px-8 py-3.5 text-brand-gray font-medium hover:text-brand-blue transition cursor-pointer">
+        <i class="fa-solid fa-gear w-5"></i> <a href="Settings.html" class="nav-link"> Settings</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content Area -->
+  <main class="flex-1 flex flex-col min-w-0 overflow-x-hidden md:ml-64">
+    <!-- Header -->
+    <header class="bg-white border-b border-brand-border px-6 md:px-10 py-5 flex items-center justify-between">
+      <h1 id="page-title" class="text-2xl font-bold text-brand-navy">Transactions</h1>
+      <div class="flex items-center gap-4">
+        <div class="bg-brand-bg rounded-full px-4 py-2 flex items-center gap-3 text-brand-gray">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="Search for something" class="bg-transparent outline-none text-sm text-brand-darkText">
+        </div>
+        <button onclick="alert('Settings Clicked')" class="w-10 h-10 rounded-full bg-brand-bg flex items-center justify-center text-brand-gray hover:bg-gray-200 transition">
+          <i class="fa-solid fa-gear"></i>
+        </button>
+        <button onclick="alert('Notifications Clicked')" class="w-10 h-10 rounded-full bg-brand-bg flex items-center justify-center text-rose-500 hover:bg-gray-200 transition">
+          <i class="fa-solid fa-bell"></i>
+        </button>
+        <img src="images/Mask Group1.png" alt="Profile" onclick="alert('Profile Clicked')" class="w-138.46 h-92.31 rounded-full object-cover cursor-pointer">
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <div class="flex-1 flex flex-col h-screen overflow-y-auto">
+
+       
+
+        <!-- DASHBOARD CONTENT AREA -->
+        <main class="p-8 space-y-8 flex-1">
+
+            <!-- TOP ROW: My Cards & My Expense -->
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+                
+                <!-- My Cards Section (Takes 2 cols) -->
+                <div class="xl:col-span-2 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-xl font-bold text-gray-800">My Cards</h2>
+                        <button onclick="openAddCardModal()" class="text-sm font-semibold text-gray-800 hover:text-brand-blue transition-colors">+ Add Card</button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="cards-container">
+                        <!-- Card 1 (Active/Selected) -->
+                        <div onclick="selectCard(0)" class="card-item cursor-pointer rounded-2xl bg-gradient-to-tr from-blue-700 to-indigo-500 text-white p-6 relative shadow-lg transition-transform hover:scale-[1.01] border-2 border-brand-cyan">
+                            <div class="flex justify-between items-start mb-6">
+                                <div>
+                                    <p class="text-xs text-blue-200 font-light">Balance</p>
+                                    <p class="text-2xl font-bold">$5,756</p>
+                                </div>
+                                <i class="fa-solid fa-sim-card text-3xl opacity-80"></i>
+                            </div>
+                            <div class="flex gap-8 mb-6 text-xs">
+                                <div>
+                                    <p class="text-blue-200 font-light">CARD HOLDER</p>
+                                    <p class="font-medium tracking-wide">Eddy Cusuma</p>
+                                </div>
+                                <div>
+                                    <p class="text-blue-200 font-light">VALID THRU</p>
+                                    <p class="font-medium tracking-wide">12/22</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center pt-4 border-t border-white/20">
+                                <span class="tracking-widest font-mono text-lg">3778 **** **** 1234</span>
+                                <div class="flex -space-x-2">
+                                    <div class="w-6 h-6 rounded-full bg-white/40"></div>
+                                    <div class="w-6 h-6 rounded-full bg-white/40"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2 (Normal) -->
+                        <div onclick="selectCard(1)" class="card-item cursor-pointer rounded-2xl bg-white border border-gray-200 text-gray-800 p-6 relative shadow-sm transition-transform hover:scale-[1.01]">
+                            <div class="flex justify-between items-start mb-6">
+                                <div>
+                                    <p class="text-xs text-brand-textGray font-light">Balance</p>
+                                    <p class="text-2xl font-bold">$5,756</p>
+                                </div>
+                                <i class="fa-solid fa-sim-card text-3xl text-gray-300"></i>
+                            </div>
+                            <div class="flex gap-8 mb-6 text-xs">
+                                <div>
+                                    <p class="text-brand-textGray font-light">CARD HOLDER</p>
+                                    <p class="font-medium tracking-wide text-gray-700">Eddy Cusuma</p>
+                                </div>
+                                <div>
+                                    <p class="text-brand-textGray font-light">VALID THRU</p>
+                                    <p class="font-medium tracking-wide text-gray-700">12/22</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+                                <span class="tracking-widest font-mono text-lg text-gray-600">3778 **** **** 1234</span>
+                                <div class="flex -space-x-2">
+                                    <div class="w-6 h-6 rounded-full bg-gray-300"></div>
+                                    <div class="w-6 h-6 rounded-full bg-gray-300"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- My Expense Section (Takes 1 col) -->
+                <div class="space-y-4">
+                    <h2 class="text-xl font-bold text-gray-800">My Expense</h2>
+                    <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm h-[225px] flex flex-col justify-between">
+                        <div class="flex items-end justify-between h-36 gap-2 pt-4 px-2">
+                            <!-- Bar Aug -->
+                            <div onclick="showExpenseDetail('Aug', '$4,200')" class="flex-1 flex flex-col items-center gap-2 group cursor-pointer">
+                                <div class="w-full bg-gray-100 group-hover:bg-brand-cyan/40 rounded-t-lg h-20 transition-all"></div>
+                                <span class="text-xs text-brand-textGray">Aug</span>
+                            </div>
+                            <!-- Bar Sep -->
+                            <div onclick="showExpenseDetail('Sep', '$8,900')" class="flex-1 flex flex-col items-center gap-2 group cursor-pointer">
+                                <div class="w-full bg-gray-100 group-hover:bg-brand-cyan/40 rounded-t-lg h-28 transition-all"></div>
+                                <span class="text-xs text-brand-textGray">Sep</span>
+                            </div>
+                            <!-- Bar Oct -->
+                            <div onclick="showExpenseDetail('Oct', '$6,100')" class="flex-1 flex flex-col items-center gap-2 group cursor-pointer">
+                                <div class="w-full bg-gray-100 group-hover:bg-brand-cyan/40 rounded-t-lg h-24 transition-all"></div>
+                                <span class="text-xs text-brand-textGray">Oct</span>
+                            </div>
+                            <!-- Bar Nov -->
+                            <div onclick="showExpenseDetail('Nov', '$3,400')" class="flex-1 flex flex-col items-center gap-2 group cursor-pointer">
+                                <div class="w-full bg-gray-100 group-hover:bg-brand-cyan/40 rounded-t-lg h-14 transition-all"></div>
+                                <span class="text-xs text-brand-textGray">Nov</span>
+                            </div>
+                            <!-- Bar Dec (Active Highest) -->
+                            <div onclick="showExpenseDetail('Dec', '$12,500')" class="flex-1 flex flex-col items-center gap-2 group cursor-pointer relative">
+                                <div class="absolute -top-7 bg-gray-900 text-white text-[10px] py-0.5 px-1.5 rounded shadow whitespace-nowrap">$12,500</div>
+                                <div class="w-full bg-brand-cyan rounded-t-lg h-32 transition-all"></div>
+                                <span class="text-xs text-brand-textGray font-semibold text-gray-800">Dec</span>
+                            </div>
+                            <!-- Bar Jan -->
+                            <div onclick="showExpenseDetail('Jan', '$5,000')" class="flex-1 flex flex-col items-center gap-2 group cursor-pointer">
+                                <div class="w-full bg-gray-100 group-hover:bg-brand-cyan/40 rounded-t-lg h-22 transition-all"></div>
+                                <span class="text-xs text-brand-textGray">Jan</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- BOTTOM SECTION: Recent Transactions -->
+            <div class="space-y-4">
+                <h2 class="text-xl font-bold text-gray-800">Recent Transactions</h2>
+
+                <!-- Tabs -->
+                <div class="flex gap-8 border-b border-gray-200 text-sm font-medium">
+                    <button onclick="filterTab('All Transactions')" id="tab-all" class="pb-3 text-brand-blue border-b-2 border-brand-blue transition-colors">All Transactions</button>
+                    <button onclick="filterTab('Income')" id="tab-income" class="pb-3 text-brand-textGray hover:text-brand-blue transition-colors">Income</button>
+                    <button onclick="filterTab('Expense')" id="tab-expense" class="pb-3 text-brand-textGray hover:text-brand-blue transition-colors">Expense</button>
+                </div>
+
+                <!-- Transactions Table Container -->
+                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="text-brand-textGray text-xs border-b border-gray-100 font-semibold uppercase tracking-wider">
+                                    <th class="py-4 px-6">Description</th>
+                                    <th class="py-4 px-6">Transaction ID</th>
+                                    <th class="py-4 px-6">Type</th>
+                                    <th class="py-4 px-6">Card</th>
+                                    <th class="py-4 px-6">Date</th>
+                                    <th class="py-4 px-6">Amount</th>
+                                    <th class="py-4 px-6 text-center">Receipt</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transaction-tbody" class="divide-y divide-gray-100 text-sm text-gray-700">
+                                <!-- Row 1 -->
+                                <tr class="hover:bg-gray-50 transition-colors" data-type="Expense">
+                                    <td class="py-4 px-6 flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-full bg-red-50 text-red-500 flex items-center justify-center">
+                                            <i class="fa-solid fa-arrow-up text-xs"></i>
+                                        </div>
+                                        <span class="font-medium text-gray-800">Spotify Subscription</span>
+                                    </td>
+                                    <td class="py-4 px-6 text-brand-textGray">#12548796</td>
+                                    <td class="py-4 px-6">Shopping</td>
+                                    <td class="py-4 px-6">1234 ****</td>
+                                    <td class="py-4 px-6 text-brand-textGray">28 Jan, 12.30 AM</td>
+                                    <td class="py-4 px-6 font-semibold text-red-500">-$2,500</td>
+                                    <td class="py-4 px-6 text-center">
+                                        <button onclick="downloadReceipt('Spotify Subscription', '-$2,500')" class="border border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white px-4 py-1.5 rounded-full text-xs font-medium transition-colors">Download</button>
+                                    </td>
+                                </tr>
+                                <!-- Row 2 -->
+                                <tr class="hover:bg-gray-50 transition-colors" data-type="Income">
+                                    <td class="py-4 px-6 flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center">
+                                            <i class="fa-solid fa-arrow-down text-xs"></i>
+                                        </div>
+                                        <span class="font-medium text-gray-800">Freepik Sales</span>
+                                    </td>
+                                    <td class="py-4 px-6 text-brand-textGray">#12548796</td>
+                                    <td class="py-4 px-6">Transfer</td>
+                                    <td class="py-4 px-6">1234 ****</td>
+                                    <td class="py-4 px-6 text-brand-textGray">25 Jan, 10.40 PM</td>
+                                    <td class="py-4 px-6 font-semibold text-emerald-500">+$750</td>
+                                    <td class="py-4 px-6 text-center">
+                                        <button onclick="downloadReceipt('Freepik Sales', '+$750')" class="border border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white px-4 py-1.5 rounded-full text-xs font-medium transition-colors">Download</button>
+                                    </td>
+                                </tr>
+                                <!-- Row 3 -->
+                                <tr class="hover:bg-gray-50 transition-colors" data-type="Expense">
+                                    <td class="py-4 px-6 flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-full bg-red-50 text-red-500 flex items-center justify-center">
+                                            <i class="fa-solid fa-arrow-up text-xs"></i>
+                                        </div>
+                                        <span class="font-medium text-gray-800">Mobile Service</span>
+                                    </td>
+                                    <td class="py-4 px-6 text-brand-textGray">#12548796</td>
+                                    <td class="py-4 px-6">Service</td>
+                                    <td class="py-4 px-6">1234 ****</td>
+                                    <td class="py-4 px-6 text-brand-textGray">20 Jan, 10.40 PM</td>
+                                    <td class="py-4 px-6 font-semibold text-red-500">-$150</td>
+                                    <td class="py-4 px-6 text-center">
+                                        <button onclick="downloadReceipt('Mobile Service', '-$150')" class="border border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white px-4 py-1.5 rounded-full text-xs font-medium transition-colors">Download</button>
+                                    </td>
+                                </tr>
+                                <!-- Row 4 -->
+                                <tr class="hover:bg-gray-50 transition-colors" data-type="Expense">
+                                    <td class="py-4 px-6 flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-full bg-red-50 text-red-500 flex items-center justify-center">
+                                            <i class="fa-solid fa-arrow-up text-xs"></i>
+                                        </div>
+                                        <span class="font-medium text-gray-800">Wilson</span>
+                                    </td>
+                                    <td class="py-4 px-6 text-brand-textGray">#12548796</td>
+                                    <td class="py-4 px-6">Transfer</td>
+                                    <td class="py-4 px-6">1234 ****</td>
+                                    <td class="py-4 px-6 text-brand-textGray">15 Jan, 03.29 PM</td>
+                                    <td class="py-4 px-6 font-semibold text-red-500">-$1050</td>
+                                    <td class="py-4 px-6 text-center">
+                                        <button onclick="downloadReceipt('Wilson', '-$1050')" class="border border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white px-4 py-1.5 rounded-full text-xs font-medium transition-colors">Download</button>
+                                    </td>
+                                </tr>
+                                <!-- Row 5 -->
+                                <tr class="hover:bg-gray-50 transition-colors" data-type="Income">
+                                    <td class="py-4 px-6 flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center">
+                                            <i class="fa-solid fa-arrow-down text-xs"></i>
+                                        </div>
+                                        <span class="font-medium text-gray-800">Emily</span>
+                                    </td>
+                                    <td class="py-4 px-6 text-brand-textGray">#12548796</td>
+                                    <td class="py-4 px-6">Transfer</td>
+                                    <td class="py-4 px-6">1234 ****</td>
+                                    <td class="py-4 px-6 text-brand-textGray">14 Jan, 10.40 PM</td>
+                                    <td class="py-4 px-6 font-semibold text-emerald-500">+$840</td>
+                                    <td class="py-4 px-6 text-center">
+                                        <button onclick="downloadReceipt('Emily', '+$840')" class="border border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white px-4 py-1.5 rounded-full text-xs font-medium transition-colors">Download</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="flex items-center justify-end px-6 py-4 gap-2 border-t border-gray-100 text-sm font-medium">
+                        <button onclick="changePage('prev')" class="text-brand-textGray hover:text-brand-blue px-3 py-1 rounded transition-colors">&lt; Previous</button>
+                        <button onclick="changePage(1)" class="page-btn w-8 h-8 rounded bg-brand-blue text-white flex items-center justify-center transition-colors">1</button>
+                        <button onclick="changePage(2)" class="page-btn w-8 h-8 rounded text-brand-textGray hover:bg-gray-100 flex items-center justify-center transition-colors">2</button>
+                        <button onclick="changePage(3)" class="page-btn w-8 h-8 rounded text-brand-textGray hover:bg-gray-100 flex items-center justify-center transition-colors">3</button>
+                        <button onclick="changePage(4)" class="page-btn w-8 h-8 rounded text-brand-textGray hover:bg-gray-100 flex items-center justify-center transition-colors">4</button>
+                        <button onclick="changePage('next')" class="text-brand-blue hover:underline px-3 py-1 rounded transition-colors">Next &gt;</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- INTERACTION NOTIFICATION TOAST -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-gray-900 text-white px-5 py-3 rounded-xl shadow-2xl opacity-0 transition-opacity duration-300 pointer-events-none z-50 flex items-center gap-3">
+        <i class="fa-solid fa-circle-check text-brand-cyan"></i>
+        <span id="toast-message">Action executed successfully</span>
+    </div>
+
+    <!-- JAVASCRIPT CODE FOR FULL INTERACTIVITY -->
+    <script>
+        // Toast Notification Helper
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.innerText = message;
+            toast.classList.remove('opacity-0');
+            toast.classList.add('opacity-100');
+            setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                toast.classList.add('opacity-0');
+            }, 3000);
+        }
+
+        // Sidebar Navigation Switcher
+        function switchNav(element, pageName) {
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                link.classList.remove('text-brand-blue', 'border-brand-blue', 'bg-blue-50/50');
+                link.classList.add('text-brand-textGray', 'border-transparent');
+            });
+            element.classList.remove('text-brand-textGray', 'border-transparent');
+            element.classList.add('text-brand-blue', 'border-brand-blue', 'bg-blue-50/50');
+            
+            document.getElementById('page-title').innerText = pageName;
+            showToast(`Switched to ${pageName} view`);
+        }
+
+        // Header Top Actions
+        function handleTopAction(actionName) {
+            showToast(`Opened ${actionName} panel`);
+        }
+
+        // Select Card Functionality
+        function selectCard(index) {
+            const cards = document.querySelectorAll('.card-item');
+            cards.forEach((card, i) => {
+                if (i === index) {
+                    card.classList.add('border-2', 'border-brand-cyan');
+                    card.classList.add('bg-gradient-to-tr', 'from-blue-700', 'to-indigo-500', 'text-white');
+                    card.classList.remove('bg-white', 'border-gray-200', 'text-gray-800');
+                } else {
+                    card.classList.remove('border-2', 'border-brand-cyan', 'bg-gradient-to-tr', 'from-blue-700', 'to-indigo-500', 'text-white');
+                    card.classList.add('bg-white', 'border', 'border-gray-200', 'text-gray-800');
+                }
+            });
+            showToast(`Selected Card #${index + 1}`);
+        }
+
+        // Add Card Modal Trigger
+        function openAddCardModal() {
+            showToast('Add New Card wizard opened');
+        }
+
+        // Expense Bar Chart Details
+        function showExpenseDetail(month, amount) {
+            showToast(`Expense for ${month}: ${amount}`);
+        }
+
+        // Filter Tabs (All Transactions, Income, Expense)
+        function filterTab(tabName) {
+            const allTab = document.getElementById('tab-all');
+            const incomeTab = document.getElementById('tab-income');
+            const expenseTab = document.getElementById('tab-expense');
+
+            // Reset tab styles
+            [allTab, incomeTab, expenseTab].forEach(tab => {
+                tab.className = "pb-3 text-brand-textGray hover:text-brand-blue transition-colors";
+            });
+
+            // Activate chosen tab
+            if(tabName === 'All Transactions') {
+                allTab.className = "pb-3 text-brand-blue border-b-2 border-brand-blue transition-colors";
+            } else if(tabName === 'Income') {
+                incomeTab.className = "pb-3 text-brand-blue border-b-2 border-brand-blue transition-colors";
+            } else if(tabName === 'Expense') {
+                expenseTab.className = "pb-3 text-brand-blue border-b-2 border-brand-blue transition-colors";
+            }
+
+            // Filter rows
+            const rows = document.querySelectorAll('#transaction-tbody tr');
+            rows.forEach(row => {
+                const type = row.getAttribute('data-type');
+                if(tabName === 'All Transactions' || type === tabName) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            showToast(`Showing filter: ${tabName}`);
+        }
+
+        // Search Input Filter
+        function filterTransactions() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const rows = document.querySelectorAll('#transaction-tbody tr');
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                row.style.display = text.includes(query) ? '' : 'none';
+            });
+        }
+
+        // Download Receipt Action
+        function downloadReceipt(item, amount) {
+            showToast(`Downloading receipt for ${item} (${amount})`);
+        }
+
+        // Pagination Handler
+        function changePage(page) {
+            if(page === 'prev' || page === 'next') {
+                showToast(`Navigated to ${page} page`);
+                return;
+            }
+            document.querySelectorAll('.page-btn').forEach(btn => {
+                btn.className = "page-btn w-8 h-8 rounded text-brand-textGray hover:bg-gray-100 flex items-center justify-center transition-colors";
+            });
+            event.target.className = "page-btn w-8 h-8 rounded bg-brand-blue text-white flex items-center justify-center transition-colors";
+            showToast(`Loaded Page ${page}`);
+        }
+    </script>
+</body>
+</html>
